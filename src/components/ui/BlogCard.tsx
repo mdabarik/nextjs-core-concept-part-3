@@ -22,12 +22,12 @@ const BlogCard = ({ blog }: { blog: Blog }) => {
           {blog.publish_date}
         </p>
         <h2 className="text-xl font-bold mt-4">
-          {blog.title.length > 30
+          {blog.title?.length > 30
             ? blog.title.slice(0, 30) + "..."
             : blog.title}
         </h2>
         <p className="text-gray-400 mt-2">
-          {blog.description.length > 100
+          {blog.description?.length > 100
             ? blog.description.slice(0, 60) + "..."
             : blog.description}
           <Link href={`/blogs/${blog.id}`} className="text-teal-600 ml-1">
