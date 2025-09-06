@@ -1,4 +1,6 @@
 import BlogCard from "@/components/ui/BlogCard";
+import Spinner from "@/components/ui/Spinner";
+import { useGetBlogsQuery } from "@/redux/apis/blog.slice";
 import { Blog } from "@/types";
 import { Metadata } from "next";
 
@@ -6,11 +8,16 @@ export const metadata: Metadata = {
   title: "NexaBlog | Blogs",
 };
 
-const BlogPage = async () => {
-  const res = await fetch("http://localhost:3001/blogs");
-  const blogs = await res.json();
+const BlogPage = () => {
+  // const res = await fetch("http://localhost:3001/blogs");
+  // const blogs = await res.json();
 
   // console.log(blogs);
+
+  const { data: blogs, isLoading } = useGetBlogsQuery({});
+  if (isLoading) {
+    return <Spinner></Spinner>;
+  }
 
   return (
     <div className="w-[90%] mx-auto">
@@ -24,7 +31,7 @@ const BlogPage = async () => {
         </i>
       </p>
       <div className="grid grid-cols-3 gap-6 my-5">
-        {blogs.map((blog: Blog) => (
+        {blogs?.map((blog: Blog) => (
           <BlogCard key={blog.id} blog={blog} />
         ))}
       </div>
